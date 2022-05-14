@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>(USR001) User Search</title>
+<th:block th:insert="~{/fragments::link}"></th:block>
+<th:block th:insert="~{/fragments::head/script}"></th:block>
+</head>
+<body class="main_body">
+	<div th:replace="fragments::header"></div>
+
+	<div id="container">
+		<div id="left_menu">
+			<!-- menu html code exist the menu function of general.js -->
+		</div>
+		<div id="main_contents">
+			<div id="contents">
+				<div class="search_form">
+					<h3>User Search</h3>
+					<form th:action="@{/stumgmt/setupusersearch}" th:object="${user}" method="post">
+						<table class="tableForm">
+							<tr>
+								<td class="tblLabel"><label>User ID</label></td>
+								<td class="tblInputNormal"><input type="text"
+									id="txtUserId" class="txt" th:field="*{id}" /></td>
+
+								<td class="tblLabel">User Name</td>
+								<td class="tblInputNormal"><input type="text"
+									id="txtUserName" class="txt" th:field="*{user}" />€€</td>
+
+							</tr>
+						</table>
+
+						<br /> <input type="submit" value="Search" class="button" />
+					</form>
+					<a th:href="@{/stumgmt/useradd}"> <input type="button" value="Add"
+						class="button" id="userInsert" />
+					</a> <a th:href="@{/stumgmt/userreset}"> <input type="button" value="Reset"
+						class="button" /></a>
+						<a th:href="@{/stumgmt/userpdf}"> <input type="button" value="Dload PDF"
+						class="button"/></a> <br /> <br />
+					<div id="errormsg">
+						<label id="message" th:text="${err}"></label>
+					</div>
+					<label style="color: blue;" th:text="${msg}"></label>
+				</div>
+
+				<br /> <br /> <br />
+				<div id="list">
+
+					<table class="resultTable">
+							<tr class="tblHeader" th:if="${userlist!=null}">
+								<th width="1%">Delete</th>
+								<th width="1%">Update</th>
+								<th width="12%">User ID</th>
+								<th width="24%">User Name</th>
+
+							</tr>
+							<tr  th:each="list : ${userlist}">
+								<td>
+								<a sec:authorize="hasRole('ADMIN')" th:href="@{/stumgmt/userdelete(id=${list.id})}"> Delete </a>
+								<p sec:authorize="hasRole('STUDENT')">N/A</p>
+								</td>
+
+								<td><a th:href="@{/stumgmt/userupdate(id=${list.id})}"> Update </a></td>
+
+								<td th:text="${list.id}"></td>
+								<td th:text="${list.user}"></td>
+							</tr>
+					</table>
+
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+	<div class="footer">
+		<span>Copyright &#169; ACE Inspiration 2016</span>
+	</div>
+</body>
+</html>

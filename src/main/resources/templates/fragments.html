@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec=" http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/base.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/stylesheets/container.css}" />
+<script type="text/javascript" th:src="@{/javascript/general.js}"></script>
+<script type="text/javascript" th:src="@{/javascript/accordion-menu.js}"></script>
+
+<script type="text/javascript">
+	window.onload = function() {
+		menu();
+	}
+</script>
+</head>
+<body>
+
+
+	<div id="header" th:fragment="header">
+		<div id="title">
+			<a th:href="@{/page}">Student Registration Assignment</a>
+		</div>
+		<div id="menuLoginTime">
+			<table>
+				<tr>
+					<td>User</td>
+					<td sec:authentication="principal.username"></td>
+				</tr>
+				<tr>
+					<td>Current Date</td>
+					<td th:text="${new java.util.Date()}"></td>
+				</tr>
+			</table>
+		</div>
+		<form th:action="@{/logout}" method="post">
+			<input id="btn_logout" class="button" type="submit" value="Logout">
+		</form>
+	</div>
+
+</body>
+</html>
